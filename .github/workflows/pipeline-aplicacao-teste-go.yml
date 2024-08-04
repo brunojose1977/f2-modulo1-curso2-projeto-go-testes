@@ -11,7 +11,32 @@ on:
 
 jobs:
 
+  setup-docker:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Update apt cache
+        run: sudo apt update
+      - name: Install packages
+        run: sudo apt install -y ca-certificates curl gnupg lsb-release
+      - name: Add Docker repository
+        run: |
+          sudo mkdir -p /etc/apt/keyrings
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg   
+
+          echo "deb [arch=$(dpkg --architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list
+
+      - name: Update apt cache
+        run: sudo apt update
+      - name: Install Docker Engine
+        run: sudo apt install docker-ce
+      - name: Start Docker service
+        run: sudo systemctl start docker
+      - name: Verify Docker installation
+        run: docker run hello-world
+
   test:
+    needs: setup-docker
     runs-on: ${{ matrix.so_linux_ubuntu_version }}
     strategy:
       matrix:
