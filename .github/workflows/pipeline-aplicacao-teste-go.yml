@@ -1,30 +1,50 @@
-name: Build and Push PostgreSQL Image
+
+name: Go
 
 on:
   push:
-    branches: [ main ]
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "*" ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
 
+  test:
+    runs-on: ${{ matrix.so_linux_ubuntu_version }}
+    strategy:
+      matrix:
+#        so_linux_ubuntu_version: ['ubuntu-21.10', 'ubuntu-22.04', '>=ubuntu-23.04']
+#        so_linux_ubuntu_version: ['ubuntu-21.10', '>=ubuntu-23.04', 'windows-11']
+        so_linux_ubuntu_version: ['>=ubuntu-23.04']        
+#        go_version: ['1.18', '1.17', '>=1.18']
+        go_version: ['1.17', '>=1.18']
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+    - uses: actions/checkout@v3
 
-      - name: Run container
-        run: |
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: ${{ matrix.go_version }}
+
+    - name: Conteiners Docker
+      uses: docker/setup-buildx-action@v2
+
+    - name: Run container PostgreSQL
+      run: |
           docker run \
             -d \
             -p 5432:5432 \
             -v postgres-data:/var/lib/postgresql/data \
             postgres:latest
 
-      - name: Run container
-        run: |
+    - name: Run container PGAdmin
+      run: |
           docker run \
             -d \
             -p 54321:80 \
-            -v postgres-data:/var/lib/postgresql/data \
             dpage/pgadmin4:latest            
+
+    - name: Test
+      run: go test -v main_test.go
+ 
+
