@@ -1,5 +1,5 @@
 
-name: Build Conteiners abd Run
+name: Build Conteiners and Run
 
 on:
   push:
