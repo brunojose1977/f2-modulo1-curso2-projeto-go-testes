@@ -24,11 +24,18 @@ jobs:
     - name: Build
       run: go build -v main.go
 
-    - name: Docker
-      run: docker run hello-world
+#    - name: Conteiner
+#      uses: actions/checkout@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build and run
+      run: |
+        docker-compose up --build --detach
 
 #    - name: Run-Database
 #      run: docker-compose up -d
 
-#    - name: Test
-#      run: go test -v main_test.go
+    - name: Test
+      run: go test -v main_test.go
