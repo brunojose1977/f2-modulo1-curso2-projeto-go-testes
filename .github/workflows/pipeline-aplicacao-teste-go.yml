@@ -20,3 +20,11 @@ jobs:
             -p 5432:5432 \
             -v postgres-data:/var/lib/postgresql/data \
             postgres:latest
+
+      - name: Run container
+        run: |
+          docker run \
+            -d \
+            -p 54321:80 \
+            -v postgres-data:/var/lib/postgresql/data \
+            dpage/pgadmin4:latest            
