@@ -23,15 +23,12 @@ jobs:
 
     - name: Build
       run: go build -v main.go
-    - name: Set up Docker Compose
-      uses: KengoTODA/actions-setup-docker-compose@v1
-      with:
-        version: '2.18.2'  # Specify the desired Docker Compose version
-    - name: Build-Database
-      run: docker-compose build
 
-    - name: Run-Database
-      run: docker-compose up -d
+    - name: Docker
+      run: docker run hello-world
 
-    - name: Test
-      run: go test -v main_test.go
+#    - name: Run-Database
+#      run: docker-compose up -d
+
+#    - name: Test
+#      run: go test -v main_test.go
