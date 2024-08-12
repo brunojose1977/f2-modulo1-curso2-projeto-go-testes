@@ -45,7 +45,7 @@ jobs:
            
   test:
     runs-on: ubuntu-latest
-
+    needs: build_and_run_containers
     steps:
       - uses: actions/checkout@v3
       - name: Test
