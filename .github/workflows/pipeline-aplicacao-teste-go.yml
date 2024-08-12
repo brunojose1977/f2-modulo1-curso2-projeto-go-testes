@@ -24,7 +24,7 @@ jobs:
             --build-arg POSTGRES_DB=root \
             -t my-postgres:latest .
 
-      - name: Run Container PostgreSQL
+      - name: Run container
         run: |
           docker run \
             -d \
@@ -32,11 +32,13 @@ jobs:
             -v postgres-data:/var/lib/postgresql/data \
             my-postgres:latest
 
-      - name: Run Container PGAdmin
+      - name: Run container
         run: |
           docker run \
             -d \
-            -p 54321:80
+            -p 54321:80 \
+            -v postgres-data:/var/lib/postgresql/data \
+            dpage/pgadmin4:latest            
 
-      - name: Test Appçication
+      - name: Test
         run: go test -v main_test.go
