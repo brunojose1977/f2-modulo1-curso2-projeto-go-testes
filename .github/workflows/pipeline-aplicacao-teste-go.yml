@@ -32,8 +32,10 @@ jobs:
             --build-arg POSTGRES_USER=root \
             --build-arg POSTGRES_PASSWORD=root \
             --build-arg POSTGRES_DB=root \
-            -t my-postgres:latest . 
-          docker push my-postgres:latest
+            -t brunojose1977/my-postgres:latest . 
+          
+      - name: Push image to Docker Hub Registry
+        run: docker push brunojose1977/my-postgres:latest          
            
   run_containers_and_test:
     runs-on: ubuntu-latest
@@ -55,7 +57,7 @@ jobs:
             -d \
             -p 5432:5432 \
             -v postgres-data:/var/lib/postgresql/data \
-            my-postgres:latest
+            brunojose1977/my-postgres:latest
 
       - name: Run Container PGAdmin
         run: |
