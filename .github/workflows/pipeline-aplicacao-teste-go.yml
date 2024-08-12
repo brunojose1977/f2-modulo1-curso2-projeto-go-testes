@@ -47,7 +47,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Pull image my-postgres from Docker Hub
-        run: docker pull my-postgres:latest          
+        run: docker pull brunojose1977/my-postgres:latest          
 
       - name: Run Container PostgreSQL 
         run: |
