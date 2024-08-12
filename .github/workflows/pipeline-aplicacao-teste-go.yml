@@ -2,8 +2,8 @@
 name: CI Projeto GO Testes
 
 # V2 - versão com separação em 2 jobs
-# job 1 - build and run containers
-# job 2 - test application
+# job 1 - Build da imagem que será usada na construção dos conteiners. Enviar essa imagem para o registry do DockerHub
+# job 2 - Logar no docker hub, baixar a imagem, rodar conteineres e testar a aplicação
 
 on:
   push:
@@ -12,11 +12,17 @@ on:
     branches: [ '*' ]
 
 jobs:
-  build_and_run_containers:
+  build_containers:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+     
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
@@ -26,7 +32,22 @@ jobs:
             --build-arg POSTGRES_USER=root \
             --build-arg POSTGRES_PASSWORD=root \
             --build-arg POSTGRES_DB=root \
-            -t my-postgres:latest .
+            -t my-postgres:latest . 
+          docker push my-postgres:latest
+           
+  run_containers_and_test:
+    runs-on: ubuntu-latest
+    needs: build_containers
+    steps:
+      - uses: actions/checkout@v3
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Pull image my-postgres from Docker Hub
+        run: docker pull my-postgres:latest          
 
       - name: Run Container PostgreSQL 
         run: |
@@ -42,11 +63,13 @@ jobs:
             -d \
             -p 54321:80 \
             dpage/pgadmin4:latest            
-           
-  test:
-    runs-on: ubuntu-latest
-    needs: build_and_run_containers
-    steps:
-      - uses: actions/checkout@v3
+
       - name: Test
         run: go test -v main_test.go
+
+      
+      # Problema detectado e em correção:
+      # - Não é possível conectar ao banco criado por conteiner no outro job;
+      # - Se eu tentar rodar o Conteiner aqui vai dar erro na imagem porque a imagem criada localmente não está visível a esse job;
+      # - Não posso usar a imagem my-postgres da minha conta DockerHub, porque não sei tratar as credenciais de acesso da minha conta dentro do Job
+      #  provavelente eu vou ter que configurar um secrets dentro do Github pra fazer um "docker login" e depois um "docker push";
