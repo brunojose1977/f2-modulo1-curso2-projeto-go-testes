@@ -1,6 +1,8 @@
 
 name: CI Projeto GO Testes
 
+#V2 - Separação em 2 Jobs, 1 - build, 2 - Run conteiners and Test
+
 on:
   push:
     branches: [ '*' ]
