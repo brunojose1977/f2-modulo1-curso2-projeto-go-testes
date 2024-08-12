@@ -68,10 +68,3 @@ jobs:
 
       - name: Test
         run: go test -v main_test.go
-
-      
-      # Problema detectado e em correção:
-      # - Não é possível conectar ao banco criado por conteiner no outro job;
-      # - Se eu tentar rodar o Conteiner aqui vai dar erro na imagem porque a imagem criada localmente não está visível a esse job;
-      # - Não posso usar a imagem my-postgres da minha conta DockerHub, porque não sei tratar as credenciais de acesso da minha conta dentro do Job
-      #  provavelente eu vou ter que configurar um secrets dentro do Github pra fazer um "docker login" e depois um "docker push";
