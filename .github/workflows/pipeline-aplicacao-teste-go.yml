@@ -42,8 +42,7 @@ jobs:
             -d \
             -p 54321:80 \
             dpage/pgadmin4:latest            
-
-jobs:
+           
   test:
     runs-on: ubuntu-latest
 
