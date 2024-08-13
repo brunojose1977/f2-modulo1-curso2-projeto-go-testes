@@ -17,8 +17,10 @@ jobs:
     runs-on: ${{ matrix.so_type_version }}
     strategy:
       matrix:
-        go_version: ['1.18', '1.17', '>=1.18']
-        so_type_version: ['ubuntu-latest', 'ubuntu-18,04', 'ubuntu-23.04']
+        go_version: ['>=1.18']
+        #go_version: ['1.18', '1.17', '>=1.18']
+        #so_type_version: ['ubuntu-latest', 'ubuntu-18,04', 'ubuntu-23.04']
+        so_type_version: ['ubuntu-latest', 'ubuntu-18,04']
     steps:
       - uses: actions/checkout@v3
       - name: Login to Docker Hub
@@ -46,8 +48,10 @@ jobs:
     needs: build_containers
     strategy:
         matrix:
-          go_version: ['1.18', '1.17', '>=1.18']
-          so_type_version: ['ubuntu-latest', 'ubuntu-18,04', 'ubuntu-23.04']
+          go_version: ['>=1.18']
+          #go_version: ['1.18', '1.17', '>=1.18']
+          #so_type_version: ['ubuntu-latest', 'ubuntu-18,04', 'ubuntu-23.04']
+          so_type_version: ['ubuntu-latest', 'ubuntu-18,04']
     steps:
       - uses: actions/checkout@v3
       - name: Setup GO
