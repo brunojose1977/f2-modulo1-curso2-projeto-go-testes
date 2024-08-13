@@ -20,8 +20,9 @@ jobs:
         #go_version: ['>=1.18']
         go_version: ['1.18', '1.17', '>=1.18']
         #so_type_version: ['ubuntu-latest', 'ubuntu-18,04', 'ubuntu-23.04']
-        so_type_version: ['ubuntu-22.04']
+        so_type_version: ['ubuntu-23.10']
         #não roda: 21.10, 22.10
+        # roda! 22.04
     steps:
       - uses: actions/checkout@v3
       - name: Login to Docker Hub
@@ -52,7 +53,7 @@ jobs:
           #go_version: ['1.18']
           go_version: ['1.18', '1.17', '>=1.18']
           #so_type_version: ['ubuntu-latest', 'ubuntu-18,04', 'ubuntu-23.04']
-          so_type_version: ['ubuntu-22.04']
+          so_type_version: ['ubuntu-23.10']
     steps:
       - uses: actions/checkout@v3
       - name: Setup GO
