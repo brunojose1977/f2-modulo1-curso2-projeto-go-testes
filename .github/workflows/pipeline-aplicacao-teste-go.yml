@@ -20,8 +20,8 @@ jobs:
         #go_version: ['>=1.18']
         go_version: ['1.18', '1.17', '>=1.18']
         #so_type_version: ['ubuntu-latest', 'ubuntu-18,04', 'ubuntu-23.04']
-        so_type_version: ['ubuntu-19.10']
-        #não roda: 21.10, 22.10, 23.10
+        so_type_version: ['ubuntu-20.04']
+        #não roda: 19.10, 21.10, 22.10, 23.10
         # roda! 22.04
     steps:
       - uses: actions/checkout@v3
@@ -53,7 +53,7 @@ jobs:
           #go_version: ['1.18']
           go_version: ['1.18', '1.17', '>=1.18']
           #so_type_version: ['ubuntu-latest', 'ubuntu-18,04', 'ubuntu-23.04']
-          so_type_version: ['ubuntu-19.10']
+          so_type_version: ['ubuntu-10.04']
     steps:
       - uses: actions/checkout@v3
       - name: Setup GO
