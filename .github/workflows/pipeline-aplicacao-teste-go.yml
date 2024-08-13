@@ -20,7 +20,7 @@ jobs:
         #go_version: ['>=1.18']
         go_version: ['1.18', '1.17', '>=1.18']
         #so_type_version: ['ubuntu-latest', 'ubuntu-18,04', 'ubuntu-23.04']
-        so_type_version: ['ubuntu-20.04']
+        so_type_version: ['ubuntu-20.04','ubuntu-22.04','ubuntu-latest']
         # não rodaM: 19.10, 21.10, 22.10, 23.10
         # rodam! 20.04, 22.04
     steps:
@@ -52,8 +52,8 @@ jobs:
         matrix:
           #go_version: ['1.18']
           go_version: ['1.18', '1.17', '>=1.18']
-          #so_type_version: ['ubuntu-latest', 'ubuntu-18,04', 'ubuntu-23.04']
-          so_type_version: ['ubuntu-20.04']
+          #so_type_version: ['ubuntu-latest', 'ubuntu-18,04', 'ubuntu-23.04'] 
+          so_type_version: ['ubuntu-20.04','ubuntu-22.04','ubuntu-latest']
     steps:
       - uses: actions/checkout@v3
       - name: Setup GO
