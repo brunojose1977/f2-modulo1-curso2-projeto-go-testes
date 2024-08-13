@@ -1,7 +1,7 @@
 
 name: CI Projeto GO Testes
 
-# V2 - versão com separação em 2 jobs
+# V3 - versão com separação em 2 jobs
 # job 1 - Build da imagem que será usada na construção dos conteiners. Enviar essa imagem para o registry do DockerHub
 # job 2 - Logar no docker hub, baixar a imagem, rodar conteineres e testar a aplicação
 #       - Matrix Strategy for Go versions
@@ -14,11 +14,8 @@ on:
 
 jobs:
   build_containers:
-    runs-on: ${{ matrix.so_type_version }}
-    strategy:
-      matrix:
-        go_version: ['1.18', '1.17', '>=1.18']
-        so_type_version: ['ubuntu-latest', 'ubuntu-18,04', 'ubuntu-23.04']
+    runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
       - name: Login to Docker Hub
@@ -42,12 +39,11 @@ jobs:
         run: docker push brunojose1977/my-postgres:latest          
            
   run_containers_and_test:
-    runs-on: ${{ matrix.so_type_version }}
+    runs-on: ubuntu-latest
     needs: build_containers
     strategy:
         matrix:
           go_version: ['1.18', '1.17', '>=1.18']
-          so_type_version: ['ubuntu-latest', 'ubuntu-18,04', 'ubuntu-23.04']
     steps:
       - uses: actions/checkout@v3
       - name: Setup GO
