@@ -32,16 +32,16 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: docker-compose build
+      - name: Build Docker image
         run: |
-          docker-compose build \
+          docker build \
             --build-arg POSTGRES_USER=root \
             --build-arg POSTGRES_PASSWORD=root \
-            --build-arg POSTGRES_DB=root .
-#            -t brunojose1977/my-postgres:latest . 
+            --build-arg POSTGRES_DB=root \
+            -t brunojose1977/my-postgres:latest . 
           
-#      - name: Push image to Docker Hub Registry
-#        run: docker push brunojose1977/my-postgres:latest          
+      - name: Push image to Docker Hub Registry
+        run: docker push brunojose1977/my-postgres:latest          
            
   run_containers_and_test:
     runs-on: ${{ matrix.so_type_version }}
@@ -65,9 +65,20 @@ jobs:
       - name: Pull image my-postgres from Docker Hub
         run: docker pull brunojose1977/my-postgres:latest          
 
-      - name: docker compose up 
+      - name: Run Container PostgreSQL 
         run: |
-          docker compose up
+          docker run \
+            -d \
+            -p 5432:5432 \
+            -v postgres-data:/var/lib/postgresql/data \
+            brunojose1977/my-postgres:latest
+
+      - name: Run Container PGAdmin
+        run: |
+          docker run \
+            -d \
+            -p 54321:80 \
+            dpage/pgadmin4:latest            
 
       - name: Test
         run: go test -v main_test.go
