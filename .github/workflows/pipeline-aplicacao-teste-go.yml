@@ -39,10 +39,13 @@ jobs:
 
       - name: docker-compose build
         run: |
-          docker-compose build \
-            --build-arg POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
-            --build-arg POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
-            --build-arg POSTGRES_DB=${{ secrets.POSTGRES_DB }} 
+          docker-compose build 
+
+#          docker-compose build \
+#            --build-arg POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
+#            --build-arg POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
+#            --build-arg POSTGRES_DB=${{ secrets.POSTGRES_DB }} 
+
 #          docker-compose build 
 #            -t brunojose1977/my-postgres:latest  
           
@@ -77,7 +80,7 @@ jobs:
 #            sudo apt-get install docker-compose         
 
       - name: docker compose up 
-        run: docker compose up -d
+        run: docker compose up -d -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -e POSTGRES_DB=root 
 
       - name: Test
         run: go test -v main_test.go
