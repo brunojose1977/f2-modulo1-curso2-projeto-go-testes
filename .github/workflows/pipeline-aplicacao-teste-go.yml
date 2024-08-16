@@ -83,7 +83,13 @@ jobs:
 #        run: docker pull brunojose1977/my-postgres:latest          
 
       - name: docker compose up 
-        run: docker compose up -d
+        run: |
+          docker-compose up -d \
+          --env POSTGRES_USER=root \
+          --env POSTGRES_PASSWORD=root \
+          --env POSTGRES_DB=root 
+      
+#        run: docker compose up -d
 
       - name: Test
         run: go test -v main_test.go
