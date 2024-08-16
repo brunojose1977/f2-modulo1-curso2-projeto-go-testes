@@ -1,4 +1,5 @@
 FROM postgres:latest
+RUN apk add --no-cache docker-compose
 
 ENV POSTGRES_USER=${POSTGRES_USER:-postgres}
 ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
