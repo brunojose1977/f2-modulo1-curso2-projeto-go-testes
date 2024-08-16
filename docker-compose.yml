@@ -4,14 +4,11 @@ services:
     image: "postgres"
     volumes:
       - /postgres-data:/var/lib/postgresql/data
-      - secret_db_user:/run/secrets/db_user
-      - secret_db_password:/run/secrets/db_password
-      - secret_db_dbname:/run/secrets/db_dbname      
     environment:
       
-      POSTGRES_USER: $(cat /run/secrets/db_user)
-      POSTGRES_PASSWORD: $(cat /run/secrets/db_password)
-      POSTGRES_DB: $(cat /run/secrets/db_dbname)
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: root
 
 
 #      POSTGRES_USER: ${POSTGRES_USER}
