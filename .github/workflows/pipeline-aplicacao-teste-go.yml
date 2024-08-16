@@ -65,22 +65,17 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: ${{ matrix.go_version }}
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+#      - name: Login to Docker Hub
+#        uses: docker/login-action@v2
+#        with:
+#          username: ${{ secrets.DOCKER_USERNAME }}
+#          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Pull image my-postgres from Docker Hub
-        run: docker pull brunojose1977/my-postgres:latest          
-
-#      - name: Install Docker Compose
-#        run: |
-#            sudo apt-get update
-#            sudo apt-get install docker-compose         
+#      - name: Pull image my-postgres from Docker Hub
+#        run: docker pull brunojose1977/my-postgres:latest          
 
       - name: docker compose up 
-        run: docker compose up -d -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -e POSTGRES_DB=root 
+        run: docker compose up -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -e POSTGRES_DB=root -d
 
       - name: Test
         run: go test -v main_test.go
