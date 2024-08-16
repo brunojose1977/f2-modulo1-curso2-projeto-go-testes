@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         go_version: ['1.17',]
-        so_type_version: ['ubuntu-22.04']
+        so_type_version: ['ubuntu-latest']
         # Versões do ubunto que o runner para e fica em espera: 19.10, 21.10, 22.10, 23.10
         # rodam de boa! 20.04, 22.04
     steps:
@@ -49,7 +49,7 @@ jobs:
     strategy:
         matrix:
           go_version: ['1.17',]
-          so_type_version: ['ubuntu-22.04']          
+          so_type_version: ['ubuntu-latest']          
     steps:
       - uses: actions/checkout@v3
       - name: Setup GO
