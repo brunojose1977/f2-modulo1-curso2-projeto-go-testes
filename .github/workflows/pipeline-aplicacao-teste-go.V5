@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         go_version: ['1.17',]
-        so_type_version: ['ubuntu-22.04']
+        so_type_version: ['ubuntu-latest']
         # Versões do ubunto que o runner para e fica em espera: 19.10, 21.10, 22.10, 23.10
         # rodam de boa! 20.04, 22.04
     steps:
@@ -28,20 +28,26 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-     
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Build Docker image
+      - name: Install Docker Compose
         run: |
-          docker build \
-            --build-arg POSTGRES_USER=root \
-            --build-arg POSTGRES_PASSWORD=root \
-            --build-arg POSTGRES_DB=root \
-            -t brunojose1977/my-postgres:latest . 
+            sudo apt-get update
+            sudo apt-get install docker-compose         
+
+      - name: docker-compose build
+        run: |
+          docker-compose build 
+#          docker-compose build \
+#            --build-arg POSTGRES_USER=root \
+#            --build-arg POSTGRES_PASSWORD=root \
+#            --build-arg POSTGRES_DB=root .
+#            -t brunojose1977/my-postgres:latest . 
           
-      - name: Push image to Docker Hub Registry
-        run: docker push brunojose1977/my-postgres:latest          
+#      - name: Push image to Docker Hub Registry
+#        run: docker push brunojose1977/my-postgres:latest          
            
   run_containers_and_test:
     runs-on: ${{ matrix.so_type_version }}
@@ -49,7 +55,7 @@ jobs:
     strategy:
         matrix:
           go_version: ['1.17',]
-          so_type_version: ['ubuntu-22.04']          
+          so_type_version: ['ubuntu-latest']          
     steps:
       - uses: actions/checkout@v3
       - name: Setup GO
@@ -65,20 +71,13 @@ jobs:
       - name: Pull image my-postgres from Docker Hub
         run: docker pull brunojose1977/my-postgres:latest          
 
-      - name: Run Container PostgreSQL 
-        run: |
-          docker run \
-            -d \
-            -p 5432:5432 \
-            -v postgres-data:/var/lib/postgresql/data \
-            brunojose1977/my-postgres:latest
+#      - name: Install Docker Compose
+#        run: |
+#            sudo apt-get update
+#            sudo apt-get install docker-compose         
 
-      - name: Run Container PGAdmin
-        run: |
-          docker run \
-            -d \
-            -p 54321:80 \
-            dpage/pgadmin4:latest            
+      - name: docker compose up 
+        run: docker compose up -d
 
       - name: Test
         run: go test -v main_test.go

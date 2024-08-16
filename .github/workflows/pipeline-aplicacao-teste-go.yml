@@ -39,12 +39,12 @@ jobs:
 
       - name: docker-compose build
         run: |
-          docker-compose build 
-#          docker-compose build \
-#            --build-arg POSTGRES_USER=root \
-#            --build-arg POSTGRES_PASSWORD=root \
-#            --build-arg POSTGRES_DB=root .
-#            -t brunojose1977/my-postgres:latest . 
+          docker-compose build \
+            --build-arg POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
+            --build-arg POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
+            --build-arg POSTGRES_DB=${{ secrets.POSTGRES_DB }} 
+#          docker-compose build 
+#            -t brunojose1977/my-postgres:latest  
           
 #      - name: Push image to Docker Hub Registry
 #        run: docker push brunojose1977/my-postgres:latest          
