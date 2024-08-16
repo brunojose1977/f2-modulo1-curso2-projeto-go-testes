@@ -39,12 +39,15 @@ jobs:
             sudo apt-get install docker-compose         
          
       - name: docker-compose build
-        run: |
-          docker-compose build
         env:
           POSTGRES_USER: root
           POSTGRES_PASSWORD: root
           POSTGRES_DB: root
+        run: |
+          docker-compose build \
+            --env POSTGRES_USER=root \
+            --env POSTGRES_PASSWORD=root \
+            --env POSTGRES_DB=root             
 
 #          docker-compose build \
 #            --build-arg POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
