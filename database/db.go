@@ -20,7 +20,7 @@ func ConectaComBancoDeDados() {
 		" user=" + os.Getenv("POSTGRES_USER") +
 		" password=" + os.Getenv("POSTGRES_PASSWORD") +
 		" dbname=" + os.Getenv("POSTGRES_DBNAME") +
-		" Port=5432 " +
+		" port=5432 " +
 		" sslmode=disable"
 
 		//	stringDeConexao := "host=" + os.Getenv("POSTGRES_HOST") +
