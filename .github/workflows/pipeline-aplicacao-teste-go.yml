@@ -13,8 +13,16 @@ on:
     branches: [ '*' ]
 
 jobs:
-  build_containers:
+  build_containers:   #-----------------------------------[   JOB 1 ]--------------------------------------------------#
     runs-on: ${{ matrix.so_type_version }}
+    # definindo as variáveis de ambiente que serão usada para injetar os parâmetros de conexão
+    env: 
+      POSTGRES_HOST: localhost
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DBNAME: root
+      POSTGRES_PORT: 5432
+
     strategy:
       matrix:
         go_version: ['1.17',]
@@ -24,11 +32,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
        
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+#      - name: Login to Docker Hub
+#        uses: docker/login-action@v2
+#        with:
+#          username: ${{ secrets.DOCKER_USERNAME }}
+#          password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -39,15 +47,13 @@ jobs:
             sudo apt-get install docker-compose         
          
       - name: docker-compose build
-        env:
-          POSTGRES_USER: root
-          POSTGRES_PASSWORD: root
-          POSTGRES_DB: root
-        run: |
-          docker-compose build \
-            --env POSTGRES_USER=root \
-            --env POSTGRES_PASSWORD=root \
-            --env POSTGRES_DB=root             
+        run: docker-compose build
+
+#        run: |
+#          docker-compose build \
+#            --env POSTGRES_USER=root \
+#            --env POSTGRES_PASSWORD=root \
+#            --env POSTGRES_DB=root             
 
 #          docker-compose build \
 #            --build-arg POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
@@ -60,8 +66,16 @@ jobs:
 #      - name: Push image to Docker Hub Registry
 #        run: docker push brunojose1977/my-postgres:latest          
            
-  run_containers_and_test:
+  run_containers_and_test: #-----------------------------------[   JOB 2 ]--------------------------------------------------#
     runs-on: ${{ matrix.so_type_version }}
+    # definindo as variáveis de ambiente que serão usada para injetar os parâmetros de conexão
+    env: 
+      POSTGRES_HOST: localhost
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DBNAME: root
+      POSTGRES_PORT: 5432
+
     needs: build_containers
     strategy:
         matrix:
@@ -91,12 +105,14 @@ jobs:
           sudo apt-get install docker-compose   
 
       - name: docker compose up 
-        run: |
-          docker-compose up \
-          --env POSTGRES_USER=root \
-          --env POSTGRES_PASSWORD=root \
-          --env POSTGRES_DB=root \
-          -d 
+        run: docker-compose up -d
+
+#        run: |
+#          docker-compose up \
+#          --env POSTGRES_USER=root \
+#          --env POSTGRES_PASSWORD=root \
+#          --env POSTGRES_DB=root \
+#          -d 
       
 #        run: docker compose up -d
 
