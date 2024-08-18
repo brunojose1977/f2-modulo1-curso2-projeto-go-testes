@@ -40,7 +40,6 @@ jobs:
         # rodam de boa! 20.04, 22.04
     steps:
       - uses: actions/checkout@v3
-       
 #      - name: Login to Docker Hub
 #        uses: docker/login-action@v2
 #        with:
@@ -112,7 +111,9 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install docker-compose   
-
+#      - name: Pull image my-postgres from Docker Hub
+#        run: docker pull brunojose1977/my-postgres:latest          
+  
       - name: docker compose up 
         run: docker-compose up -d
 
