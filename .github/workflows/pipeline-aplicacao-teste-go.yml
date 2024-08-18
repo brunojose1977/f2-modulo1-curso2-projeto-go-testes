@@ -15,13 +15,22 @@ on:
 jobs:
   build_containers:   #-----------------------------------[   JOB 1 ]--------------------------------------------------#
     runs-on: ${{ matrix.so_type_version }}
-    # definindo as variáveis de ambiente que serão usada para injetar os parâmetros de conexão
+
+    # Injetando das variáveis de ambiente os secrets criados no Github;
+    # No Github: 
+    #   - selecionar projeto
+    #   - selecionar a branch
+    #   - no menu HORIZONTAL superior clicar em Settings
+    #   - rolar a tela até encontrar a seção Security          
+    #   - clicar em Secrets and variables
+    #   - clicar em Actions
+
     env: 
-      POSTGRES_HOST: localhost
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-      POSTGRES_DBNAME: root
-      POSTGRES_PORT: 5432
+      POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_DBNAME: ${{ secrets.POSTGRES_DBNAME }}
+      POSTGRES_PORT: ${{ secrets.POSTGRES_DBNAME }}
 
     strategy:
       matrix:
