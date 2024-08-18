@@ -1,17 +1,37 @@
-version: '3'
+version: '3.7'
 services:
   postgres:
     image: "postgres"
+    volumes:
+      - /postgres-data:/var/lib/postgresql/data
+
     environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
-      - POSTGRES_DB=root      
+      
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DBNAME: ${POSTGRES_DBNAME}
+      POSTGRES_PORT: ${POSTGRES_PORT}            
+  
+
+#      POSTGRES_USER: ${POSTGRES_USER}
+#      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+#      POSTGRES_DB: ${POSTGRES_DB}
+
+#      POSTGRES_USER: root  
+#      POSTGRES_PASSWORD: root
+#      POSTGRES_DB: root
+
+
+#      - POSTGRES_USER=${POSTGRES_USER}
+#      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+#      - POSTGRES_DB=${POSTGRES_DB}
+
     ports:
       - "5432:5432"
-    volumes:
-      - /postgres-data:/var/lib/postgresql/data  
 
-  pgadmin-compose:
+
+  pgadmin:
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: "gui@alura.com"
@@ -21,3 +41,6 @@ services:
     depends_on:
       - postgres
 
+#Modelo de chamada build desse docker-compose passando os argumentos
+#docker-compose build --build-arg POSTGRES_USER=root --build-arg POSTGRES_PASSWORD=root --build-arg POSTGRES_DB=root
+#colocar o comando acima na pipeline
