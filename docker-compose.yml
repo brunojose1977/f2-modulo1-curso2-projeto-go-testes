@@ -13,20 +13,6 @@ services:
       POSTGRES_DBNAME: ${POSTGRES_DBNAME}
       POSTGRES_PORT: ${POSTGRES_PORT}            
   
-
-#      POSTGRES_USER: ${POSTGRES_USER}
-#      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-#      POSTGRES_DB: ${POSTGRES_DB}
-
-#      POSTGRES_USER: root  
-#      POSTGRES_PASSWORD: root
-#      POSTGRES_DB: root
-
-
-#      - POSTGRES_USER=${POSTGRES_USER}
-#      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-#      - POSTGRES_DB=${POSTGRES_DB}
-
     ports:
       - "5432:5432"
 
@@ -41,6 +27,3 @@ services:
     depends_on:
       - postgres
 
-#Modelo de chamada build desse docker-compose passando os argumentos
-#docker-compose build --build-arg POSTGRES_USER=root --build-arg POSTGRES_PASSWORD=root --build-arg POSTGRES_DB=root
-#colocar o comando acima na pipeline

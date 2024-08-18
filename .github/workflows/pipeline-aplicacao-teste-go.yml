@@ -57,19 +57,8 @@ jobs:
       - name: docker-compose build
         run: docker-compose build
 
-#        run: |
-#          docker-compose build \
-#            --env POSTGRES_USER=root \
-#            --env POSTGRES_PASSWORD=root \
-#            --env POSTGRES_DB=root             
 
-#          docker-compose build \
-#            --build-arg POSTGRES_USER=${{ secrets.POSTGRES_USER }} \
-#            --build-arg POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
-#            --build-arg POSTGRES_DB=${{ secrets.POSTGRES_DB }} 
-
-#          docker-compose build 
-#            -t brunojose1977/my-postgres:latest  
+# O código abaixo, que foi comentado, é pra quando for usar minha imagem do Dockerhub        
           
 #      - name: Push image to Docker Hub Registry
 #        run: docker push brunojose1977/my-postgres:latest          
@@ -95,6 +84,8 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: ${{ matrix.go_version }}
+
+# O código abaixo, que foi comentado, é pra quando for usar minha imagem do Dockerhub   
 #      - name: Login to Docker Hub
 #        uses: docker/login-action@v2
 #        with:
@@ -111,20 +102,13 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install docker-compose   
+
+# O código abaixo, que foi comentado, é pra quando for usar minha imagem do Dockerhub             
 #      - name: Pull image my-postgres from Docker Hub
 #        run: docker pull brunojose1977/my-postgres:latest          
   
       - name: docker compose up 
         run: docker-compose up -d
-
-#        run: |
-#          docker-compose up \
-#          --env POSTGRES_USER=root \
-#          --env POSTGRES_PASSWORD=root \
-#          --env POSTGRES_DB=root \
-#          -d 
-      
-#        run: docker compose up -d
 
       - name: Test
         run: go test -v main_test.go
