@@ -2,6 +2,7 @@ FROM postgres:latest
 RUN apk add --no-cache docker-compose
 
 #18-08-2024 ---------------------------- INICIO
+#Variáveis de ambiente foram retiradas do Dockerfile que já foram definidas no Pipeline e injetadas no docker-compose
 
 #ENV POSTGRES_HOST=localhost
 #ENV POSTGRES_USER=root
