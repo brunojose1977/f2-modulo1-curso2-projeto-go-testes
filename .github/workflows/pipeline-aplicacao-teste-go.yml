@@ -55,7 +55,15 @@ jobs:
             sudo apt-get install docker-compose         
          
       - name: docker-compose build
-        run: docker-compose build
+        run: docker-compose buildclear && cd ~/devops/f2-modulo1/curso2/f2-modulo1-curso2-projeto-go-testes && ls -la
+
+# criando um artifact com o programa main
+
+      - name: Upload programa main compilado
+        uses: actions/upload-artifact@v3
+        with:
+          name: programa
+          path: main
 
 
 # O código abaixo, que foi comentado, é pra quando for usar minha imagem do Dockerhub        
