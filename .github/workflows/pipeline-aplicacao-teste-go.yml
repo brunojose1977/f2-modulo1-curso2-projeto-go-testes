@@ -106,9 +106,14 @@ jobs:
 # O código abaixo, que foi comentado, é pra quando for usar minha imagem do Dockerhub             
 #      - name: Pull image my-postgres from Docker Hub
 #        run: docker pull brunojose1977/my-postgres:latest          
-  
+
+# Abaixo o exemplo de include de arquivos a pipeline principal
       - name: docker compose up 
         run: docker-compose up -d
 
       - name: Test
         run: go test -v main_test.go
+  docker:
+    needs: build_containers
+    uses: ./.github/workflows/Docker.yml
+    
