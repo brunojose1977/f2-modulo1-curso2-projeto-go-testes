@@ -55,7 +55,8 @@ jobs:
             sudo apt-get install docker-compose         
          
       - name: docker-compose build
-        run: docker-compose build clear && cd ~/devops/f2-modulo1/curso2/f2-modulo1-curso2-projeto-go-testes && ls -la
+        #run: docker-compose build clear && cd ~/devops/f2-modulo1/curso2/f2-modulo1-curso2-projeto-go-testes && ls -la
+        run: docker-compose build
 
 # criando um artifact com o programa main
 
