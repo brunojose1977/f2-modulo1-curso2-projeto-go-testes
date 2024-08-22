@@ -116,4 +116,5 @@ jobs:
   docker:
     needs: build_containers
     uses: ./.github/workflows/Docker.yml
+    secrets: inherit
     
